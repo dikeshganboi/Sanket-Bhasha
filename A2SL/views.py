@@ -181,43 +181,57 @@ def process_english_for_sign_language(text):
 # SQLite is ephemeral on serverless, so authentication doesn't persist
 # For production, use a managed database (PostgreSQL, etc.)
 def animation_view(request):
-    if request.method == 'POST':
-        # Get input data
-        original_text = request.POST.get('sen', '').strip()
-        selected_language = request.POST.get('language', 'en')
-        
-        if not original_text:
-            return render(request, 'animation.html', {
-                'error': 'Please enter some text or use the microphone.',
+    try:
+        if request.method == 'POST':
+            # Get input data
+            original_text = request.POST.get('sen', '').strip()
+            selected_language = request.POST.get('language', 'en')
+            
+            if not original_text:
+                return render(request, 'animation.html', {
+                    'error': 'Please enter some text or use the microphone.',
+                    'supported_languages': translation_service.get_supported_languages()
+                })
+            
+            # Process multilingual text
+            english_text, detected_language, processed_words = process_multilingual_text(
+                original_text, selected_language
+            )
+            
+            # Get language information
+            source_lang_info = translation_service.get_language_info(detected_language)
+            
+            context = {
+                'words': processed_words,
+                'original_text': original_text,
+                'english_text': english_text,
+                'detected_language': detected_language,
+                'source_language_name': source_lang_info.get('native_name', source_lang_info.get('name')),
+                'selected_language': selected_language,
+                'supported_languages': translation_service.get_supported_languages(),
+                'translation_performed': detected_language != 'en'
+            }
+            
+            return render(request, 'animation.html', context)
+        else:
+            # GET request - show the form with language options
+            context = {
                 'supported_languages': translation_service.get_supported_languages()
-            })
+            }
+            return render(request, 'animation.html', context)
+    except Exception as e:
+        # Log error and return a user-friendly message
+        logger = logging.getLogger(__name__)
+        logger.error(f"Animation view error: {str(e)}")
         
-        # Process multilingual text
-        english_text, detected_language, processed_words = process_multilingual_text(
-            original_text, selected_language
-        )
-        
-        # Get language information
-        source_lang_info = translation_service.get_language_info(detected_language)
-        
-        context = {
-            'words': processed_words,
-            'original_text': original_text,
-            'english_text': english_text,
-            'detected_language': detected_language,
-            'source_language_name': source_lang_info.get('native_name', source_lang_info.get('name')),
-            'selected_language': selected_language,
-            'supported_languages': translation_service.get_supported_languages(),
-            'translation_performed': detected_language != 'en'
-        }
-        
-        return render(request, 'animation.html', context)
-    else:
-        # GET request - show the form with language options
-        context = {
-            'supported_languages': translation_service.get_supported_languages()
-        }
-        return render(request, 'animation.html', context)
+        # Return basic form with error message
+        return render(request, 'animation.html', {
+            'error': f'An error occurred. Please try again. (Error: {str(e)[:100]})',
+            'supported_languages': {
+                'en': {'name': 'English', 'code': 'en', 'native_name': 'English', 'flag': '🇺🇸', 'active': True},
+                'hi': {'name': 'Hindi', 'code': 'hi', 'native_name': 'हिंदी', 'flag': '🇮🇳', 'active': True}
+            }
+        })
 
 
 
