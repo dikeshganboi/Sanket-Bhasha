@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.whl
+.installed.cfg
+*.egg-info/
+MANIFEST
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node modules (if using npm for frontend tools)
+node_modules/
+npm-debug.log
+
+# Tailwind
+input.css.map
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Secret files
+secrets.json
+credentials.json
+*.pem
+*.key
+
+# Development notes (files you want to exclude)
+GUJARATI_FIX_SUMMARY.md
+TESTING_SUMMARY.md
+TTS_QUICK_GUIDE.md
+*_SUMMARY.md
+*_FIX_*.md

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="fade-in max-w-4xl mx-auto">
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl">
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-4">
+                About Our Project
+            </h2>
+            <div class="bg-yellow-400 text-gray-900 inline-block px-4 py-2 rounded-full font-bold text-sm">
+                VERSION 1.0.0
+            </div>
+        </div>
+
+        <div class="text-gray-300 space-y-8">
+            <!-- Mission Section -->
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-yellow-400 mb-4">Our Mission</h3>
+                <p class="text-lg leading-relaxed">
+                    We are a passionate team of enthusiasts dedicated to bridging the gap between spoken language and Indian Sign Language. 
+                    Our mission is to make communication accessible to everyone, fostering inclusivity and understanding in our society.
+                </p>
+            </div>
+            
+            <!-- Team Section -->
+            <div class="bg-gray-700 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-yellow-400 mb-6 text-center">Meet Our Creator Team</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-600 p-4 rounded-lg text-center">
+                        <div class="text-2xl mb-2">👨‍💻</div>
+                        <h4 class="font-bold text-white">Dikesh Ganboi</h4>
+                        <p class="text-gray-300 text-sm">Project Lead & Developer</p>
+                    </div>
+                    <div class="bg-gray-600 p-4 rounded-lg text-center">
+                        <div class="text-2xl mb-2">👨‍💻</div>
+                        <h4 class="font-bold text-white">Harsh Patel</h4>
+                        <p class="text-gray-300 text-sm">Frontend Developer</p>
+                    </div>
+                    <div class="bg-gray-600 p-4 rounded-lg text-center">
+                        <div class="text-2xl mb-2">👨‍💻</div>
+                        <h4 class="font-bold text-white"> Dipak Surnar</h4>
+                        <p class="text-gray-300 text-sm">Backend Developer</p>
+                    </div>
+                    <div class="bg-gray-600 p-4 rounded-lg text-center">
+                        <div class="text-2xl mb-2">👨‍💻</div>
+                        <h4 class="font-bold text-white">Dikesh Ganboi</h4>
+                        <p class="text-gray-300 text-sm">UI/UX Designer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Section -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="text-4xl mb-3">🎙️</div>
+                    <h4 class="font-bold text-yellow-400 mb-2">Speech Recognition</h4>
+                    <p class="text-sm">Advanced voice-to-text conversion using Web Speech API</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-3">🎥</div>
+                    <h4 class="font-bold text-yellow-400 mb-2">3D Animations</h4>
+                    <p class="text-sm">Beautiful sign language animations created with Blender 3D</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-3">🤝</div>
+                    <h4 class="font-bold text-yellow-400 mb-2">Accessibility</h4>
+                    <p class="text-sm">Making communication barrier-free for the deaf community</p>
+                </div>
+            </div>
+            
+            <!-- Thank you message -->
+            <div class="text-center bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">🙏 Thank You!</h3>
+                <p class="font-medium">Thank you for visiting our website and supporting our mission to make communication accessible to all.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
