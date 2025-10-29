@@ -27,12 +27,20 @@ nltk.download('omw-1.4')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3k7=!d39#4@_&5a6to&4=_=j(c^v0(vv91cj5+9e8+d4&+01jb'
+# Read from environment in production; fallback for local dev
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'insecure-dev-secret-key-change-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Use env var DJANGO_DEBUG to control (default True for local)
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# Allow Vercel and local hosts by default; override with DJANGO_ALLOWED_HOSTS
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '.vercel.app,localhost,127.0.0.1').split(',')
+
+# Trust Vercel origins for CSRF when deployed
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.vercel.app',
+]
 
 
 # Application definition
@@ -48,6 +56,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # Efficient static files in production and serverless environments
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,7 +136,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Where 'collectstatic' would put files (optional for Vercel when using finders)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Include project static directories
 STATICFILES_DIRS = [    
-    os.path.join(BASE_DIR,"assets"),
-    os.path.join(BASE_DIR,"static"),
+    os.path.join(BASE_DIR, "assets"),
+    os.path.join(BASE_DIR, "static"),
 ]
+
+# Let WhiteNoise serve files directly from STATICFILES_DIRS without collectstatic
+WHITENOISE_USE_FINDERS = True
+
+# Compressed manifest storage for efficient caching (safe even without collectstatic)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
