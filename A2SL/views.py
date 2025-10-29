@@ -177,7 +177,9 @@ def process_english_for_sign_language(text):
     
     return filtered_text
 
-@login_required(login_url="login")
+# Note: @login_required removed for Vercel deployment
+# SQLite is ephemeral on serverless, so authentication doesn't persist
+# For production, use a managed database (PostgreSQL, etc.)
 def animation_view(request):
     if request.method == 'POST':
         # Get input data
@@ -224,9 +226,9 @@ def signup_view(request):
 	if request.method == 'POST':
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
-			user = form.save()
-			login(request,user)
-			# log the user in
+			# Note: On Vercel, SQLite database is ephemeral
+			# Accounts won't persist across function invocations
+			# For demo purposes, redirect to converter directly
 			return redirect('animation')
 	else:
 		form = UserCreationForm()
@@ -236,15 +238,9 @@ def signup_view(request):
 
 def login_view(request):
 	if request.method == 'POST':
-		form = AuthenticationForm(data=request.POST)
-		if form.is_valid():
-			#log in user
-			user = form.get_user()
-			login(request,user)
-			if 'next' in request.POST:
-				return redirect(request.POST.get('next'))
-			else:
-				return redirect('animation')
+		# Note: On Vercel, SQLite database is ephemeral
+		# Login won't work reliably; redirect to converter
+		return redirect('animation')
 	else:
 		form = AuthenticationForm()
 	return render(request,'login.html',{'form':form})
