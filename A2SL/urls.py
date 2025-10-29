@@ -25,6 +25,7 @@ urlpatterns = [
     path('logout/',views.logout_view,name='logout'),
     path('signup/',views.signup_view,name='signup'),
     path('animation/',views.animation_view,name='animation'),
+    path('health/', views.health_view, name='health'),
     path('',views.home_view,name='home'),
     # API endpoints for multilingual support
     path('api/languages/', views.get_supported_languages, name='get_languages'),

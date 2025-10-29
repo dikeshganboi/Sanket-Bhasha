@@ -149,5 +149,5 @@ STATICFILES_DIRS = [
 # Let WhiteNoise serve files directly from STATICFILES_DIRS without collectstatic
 WHITENOISE_USE_FINDERS = True
 
-# Compressed manifest storage for efficient caching (safe even without collectstatic)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Use non-manifest storage to avoid MissingManifest errors when not running collectstatic
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'

@@ -38,6 +38,10 @@ def get_supported_languages(request):
     }
     return JsonResponse({'languages': active_languages})
 
+# Simple health check endpoint for uptime and debugging
+def health_view(request):
+    return JsonResponse({"status": "ok"})
+
 # Process multilingual text for sign language conversion
 def process_multilingual_text(text: str, selected_language: str = 'auto') -> Tuple[str, str, list]:
     """
